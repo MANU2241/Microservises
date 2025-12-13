@@ -5,7 +5,7 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_USERNAME = "your_dockerhub_username"
+        DOCKERHUB_USERNAME = "YOUR_USER_NAME"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
     }
 
@@ -18,11 +18,43 @@ pipeline {
             }
         }
 
-        stage('Build Maven Projects') {
+        stage('Build Service Registry') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat 'cd service-registry && mvn clean package -DskipTests'
             }
         }
+        
+        stage('Build API Gateway') {
+            steps {
+                bat 'cd api-gateway && mvn clean package -DskipTests'
+            }
+        }
+        
+        stage('Build Question Service') {
+            steps {
+                bat 'cd question-service && mvn clean package -DskipTests'
+            }
+        }
+        
+        stage('Build Quiz Service') {
+            steps {
+                bat 'cd quiz-service && mvn clean package -DskipTests'
+            }
+        }
+
+        
+        stage('Verify JARs') {
+            steps {
+                bat '''
+                dir service-registry\\target
+                dir api-gateway\\target
+                dir question-service\\target
+                dir quiz-service\\target
+                '''
+            }
+        }
+
+
 
         stage('Build Docker Images') {
             steps {
