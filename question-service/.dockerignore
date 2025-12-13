@@ -1,5 +1,5 @@
-# Maven build output (except final jar)
-target/*
+# Ignore everything in target EXCEPT jar
+target/**
 !target/*.jar
 
 # Maven wrapper
@@ -7,14 +7,10 @@ target/*
 mvnw
 mvnw.cmd
 
-# IDE files
+# IDE
 .idea/
 .vscode/
 *.iml
-
-# OS files
-.DS_Store
-Thumbs.db
 
 # Git
 .git
@@ -23,13 +19,6 @@ Thumbs.db
 # Logs
 *.log
 
-# Node / frontend (if any)
-node_modules/
-
-# Docker files themselves
-Dockerfile
-docker-compose.yml
-
-# Test & docs
-README.md
-docs/
+# OS
+.DS_Store
+Thumbs.db
